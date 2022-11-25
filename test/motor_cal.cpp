@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <EEPROM.h>
+// #include <EEPROM.h>
 #include <RP2040_PWM.h>
 
 /**
@@ -95,50 +95,50 @@ void setup()
     // 3        blink_period low byte
     // 4        blink_period high byte
 
-    if (EEPROM.read(0) == 'A' && EEPROM.read(1) == 'C' && EEPROM.read(2) == 'E')
-    {
-        //  if the signature is present then we can read the cofiguration from the EEPROM
-        for (int i = 0; i < EEPROM.read(3); i++)
-        {
-            motores[i].noventa_mais = EEPRON.read(3 + i * 2 + 1) | (EEPROM.read(4 + i * 2 + 1) << 8);
-            motores[i].noventa_menos = EEPRON.read(5 + i * 2 + 1) | (EEPROM.read(6 + i * 2 + 1) << 8);
-        }
-        // blink_period = EEPROM.read(3) | (EEPROM.read(4) << 8);
-        //} else {
-        // if not, set it to the default value
-        // blink_period = 2000;
-        //}
+    // if (EEPROM.read(0) == 'A' && EEPROM.read(1) == 'C' && EEPROM.read(2) == 'E')
+    // {
+    //     //  if the signature is present then we can read the cofiguration from the EEPROM
+    //     for (int i = 0; i < EEPROM.read(3); i++)
+    //     {
+    //         motores[i].noventa_mais = EEPRON.read(3 + i * 2 + 1) | (EEPROM.read(4 + i * 2 + 1) << 8);
+    //         motores[i].noventa_menos = EEPRON.read(5 + i * 2 + 1) | (EEPROM.read(6 + i * 2 + 1) << 8);
+    //     }
+    // blink_period = EEPROM.read(3) | (EEPROM.read(4) << 8);
+    //} else {
+    // if not, set it to the default value
+    // blink_period = 2000;
+    //}
 
-        motores[0].ID = PinToPWM1;
-        motores[1].ID = PinToPWM2;
-        motores[2].ID = PinToPWM3;
-        motores[3].ID = PinToPWM4;
-        motores[4].ID = PinToPWM5;
-        motores[5].ID = PinToPWM6;
-        motores[6].ID = PinToPWM7;
-        motores[7].ID = PinToPWM8;
+    motores[0].ID = PinToPWM1;
+    motores[1].ID = PinToPWM2;
+    motores[2].ID = PinToPWM3;
+    motores[3].ID = PinToPWM4;
+    motores[4].ID = PinToPWM5;
+    motores[5].ID = PinToPWM6;
+    motores[6].ID = PinToPWM7;
+    motores[7].ID = PinToPWM8;
 
-        // INTERVALO EM QUE SE VAI FAZER LEITURAS DO PICO
-        interval = 10;
-        i = 0; // controla os serrvos
-        j = 0; // controla as posicoes
+    // INTERVALO EM QUE SE VAI FAZER LEITURAS DO PICO
+    interval = 10;
+    i = 0; // controla os serrvos
+    j = 0; // controla as posicoes
 
-        // assigns pin 25 (built in LED), with frequency of 50 Hz and a duty cycle of 0%
-        PWM_Instance = new RP2040_PWM(motores[0].ID, 50, 0);
+    // assigns pin 25 (built in LED), with frequency of 50 Hz and a duty cycle of 0%
+    PWM_Instance = new RP2040_PWM(motores[0].ID, 50, 0);
 
-        zero = 7.5; // percentagem de duty cycle
-        noventa_mais = 10;
-        noventa_menos = 5;
-        posicoes[0] = noventa_mais;
-        posicoes[1] = noventa_menos;
-        posicoes[2] = zero;
+    zero = 7.5; // percentagem de duty cycle
+    noventa_mais = 10;
+    noventa_menos = 5;
+    posicoes[0] = noventa_mais;
+    posicoes[1] = noventa_menos;
+    posicoes[2] = zero;
 
-        set_state(fsm1, 0);
-    }
+    set_state(fsm1, 0);
 }
 
 void loop()
 {
+    delay(250);
     // put your main code here, to run repeatedly:
     frequency = 50;
 
@@ -221,15 +221,15 @@ void loop()
                 posicoes[2] = (posicoes[1] + posicoes[0]) / 2; // zero está no meio
                 i++;
                 j = 0;
-                EEPROM.write(0, 'A');
-                EEPROM.write(1, 'C');
-                EEPROM.write(2, 'E');
-                EEPROM.write(3, i);                                     // Quantos servos estão gravados
-                EEPROM.write(3 + i * 2 + 1, posicoes[1] & 0xFF);        // blink_period low byte
-                EEPROM.write(4 + i * 2 + 1, (posicoes[1] >> 8) & 0xFF); // blink_period high byte
-                EEPROM.write(5 + i * 2 + 1, posicoes[2] & 0xFF);        // blink_period low byte
-                EEPROM.write(6 + i * 2 + 1, (posicoes[2] >> 8) & 0xFF); // blink_period high byte
-                EEPROM.commit();
+                // EEPROM.write(0, 'A');
+                // EEPROM.write(1, 'C');
+                // EEPROM.write(2, 'E');
+                // EEPROM.write(3, i);                                     // Quantos servos estão gravados
+                // EEPROM.write(3 + i * 2 + 1, posicoes[1] & 0xFF);        // blink_period low byte
+                // EEPROM.write(4 + i * 2 + 1, (posicoes[1] >> 8) & 0xFF); // blink_period high byte
+                // EEPROM.write(5 + i * 2 + 1, posicoes[2] & 0xFF);        // blink_period low byte
+                // EEPROM.write(6 + i * 2 + 1, (posicoes[2] >> 8) & 0xFF); // blink_period high byte
+                // EEPROM.commit();
                 Serial.print("Saving EEPROM! ");
                 posicoes[0] = noventa_mais;
                 posicoes[1] = noventa_menos;
@@ -246,4 +246,7 @@ void loop()
 
     // UPDATE STATE
     set_state(fsm1, fsm1.new_state);
+
+    Serial.print("State: ");
+    Serial.println(fsm1.state);
 }
