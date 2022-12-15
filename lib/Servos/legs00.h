@@ -14,11 +14,8 @@
  *
  */
 
-long servos[8][3];
-RP2040_PWM *PWM_Instance;
+// long myServos[8][3];
 
-void initiate_servos_pwm(int pin, RP2040_PWM *PWM_Instance);
-
-void servo_rotate(int degrees, int pin, RP2040_PWM *PWM_Instance);
-
-void initiate_servos();
+// void initiate_servos_pwm(int pin, RP2040_PWM *PWM_Instance);
+void servo_rotate(int degrees, int pin, float servos[], RP2040_PWM *PWM_Instance);
+void initiate_servos(float myServos[][3]);
